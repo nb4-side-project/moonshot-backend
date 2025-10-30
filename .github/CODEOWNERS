@@ -1,0 +1,31 @@
+# CODEOWNERS 파일
+# 각 파일/디렉토리의 코드 소유자를 지정합니다.
+# PR 생성 시 자동으로 리뷰어로 지정됩니다.
+
+# 기본 소유자 (모든 파일)
+* @nb4-side-project/moonshot-backend-team
+
+# 인증 관련
+/src/modules/auth/ @nb4-side-project/auth-team
+/src/shared/middlewares/auth.middleware.ts @nb4-side-project/auth-team
+
+# 데이터베이스
+/prisma/ @nb4-side-project/database-team
+/src/configs/prisma.ts @nb4-side-project/database-team
+
+# 설정 파일
+/.github/ @nb4-side-project/devops-team
+/src/shared/constants/ @nb4-side-project/devops-team
+/.env.example @nb4-side-project/devops-team
+
+# 문서
+/docs/ @nb4-side-project/documentation-team
+README.md @nb4-side-project/documentation-team
+
+# 코드 품질 설정
+eslint.config.mjs @nb4-side-project/code-quality-team
+.prettierrc @nb4-side-project/code-quality-team
+tsconfig.json @nb4-side-project/code-quality-team
+
+# CI/CD
+/.github/workflows/ @nb4-side-project/devops-team

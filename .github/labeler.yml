@@ -1,0 +1,73 @@
+# 변경된 파일 경로에 따라 자동으로 라벨을 추가합니다
+
+# 인증 관련
+'auth':
+  - 'src/modules/auth/**/*'
+  - 'src/shared/middlewares/auth.middleware.ts'
+
+# 데이터베이스
+'database':
+  - 'prisma/**/*'
+  - 'src/configs/prisma.ts'
+
+# API
+'api':
+  - 'src/modules/**/*.controller.ts'
+  - 'src/modules/**/*.routes.ts'
+
+# 비즈니스 로직
+'service':
+  - 'src/modules/**/*.service.ts'
+
+# 유효성 검증
+'validation':
+  - 'src/modules/**/*.dto.ts'
+  - 'src/shared/middlewares/validation.middleware.ts'
+
+# 미들웨어
+'middleware':
+  - 'src/shared/middlewares/**/*'
+
+# 에러 처리
+'error-handling':
+  - 'src/shared/errors/**/*'
+  - 'src/shared/middlewares/error-handler.ts'
+
+# 설정
+'config':
+  - 'src/configs/**/*'
+  - 'src/shared/constants/**/*'
+  - '.env.example'
+
+# 문서
+'documentation':
+  - 'docs/**/*'
+  - 'README.md'
+  - '*.md'
+
+# 테스트
+'test':
+  - '**/*.test.ts'
+  - '**/*.spec.ts'
+
+# CI/CD
+'ci/cd':
+  - '.github/workflows/**/*'
+
+# 코드 품질
+'code-quality':
+  - 'eslint.config.mjs'
+  - '.prettierrc'
+  - '.prettierignore'
+  - 'tsconfig.json'
+  - '.lintstagedrc.json'
+
+# 의존성
+'dependencies':
+  - 'package.json'
+  - 'package-lock.json'
+
+# Git 설정
+'git':
+  - '.gitignore'
+  - '.github/**/*'

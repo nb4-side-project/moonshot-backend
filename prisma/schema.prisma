@@ -1,0 +1,229 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+// ============================================
+// User & Authentication
+// ============================================
+
+model User {
+    id           Int       @id @default(autoincrement())
+    email        String    @unique
+    password     String?   // OAuth 사용자는 null 가능
+    name         String
+    profileImage  String?
+    provider     String?   // 'local' | 'google' | 'kakao' 등
+    providerId   String?   // OAuth provider의 user ID
+    createdAt    DateTime  @default(now())
+    updatedAt    DateTime  @updatedAt
+
+    // Relations
+    ownedProjects       Project[]       @relation("ProjectOwner")
+    projectMemberships  ProjectMember[]
+    assignedTasks       Task[]          @relation("TaskAssignee")
+    comments            Comment[]
+    invitationsSent     Invitation[]    @relation("InvitationSender")
+    invitationsReceived Invitation[]    @relation("InvitationReceiver")
+    refreshTokens       RefreshToken[]  // Refresh Token 관리
+
+    @@index([email])
+    @@index([provider, providerId])
+    @@map("users")
+}
+
+model RefreshToken {
+    id        Int      @id @default(autoincrement())
+    token     String   @unique
+    userId    Int
+    expiresAt DateTime
+    createdAt DateTime @default(now())
+
+    // Relations
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([userId])
+    @@index([token])
+    @@index([expiresAt]) // 만료된 토큰 정리용
+    @@map("refresh_tokens")
+}
+
+// ============================================
+// Project Management
+// ============================================
+
+model Project {
+    id          Int      @id @default(autoincrement())
+    name        String
+    description String
+    ownerId     Int
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    // Relations
+    owner       User            @relation("ProjectOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+    members     ProjectMember[]
+    tasks       Task[]
+    invitations Invitation[]
+
+    @@index([ownerId])
+    @@map("projects")
+}
+
+model ProjectMember {
+    id        Int      @id @default(autoincrement())
+    projectId Int
+    userId    Int
+    createdAt DateTime @default(now())
+
+    // Relations
+    project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+    user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([projectId, userId])
+    @@index([projectId])
+    @@index([userId])
+    @@map("project_members")
+}
+
+// ============================================
+// Task Management
+// ============================================
+
+model Task {
+    id          Int      @id @default(autoincrement())
+    projectId   Int
+    title       String
+    startYear   Int
+    startMonth  Int
+    startDay    Int
+    endYear     Int
+    endMonth    Int
+    endDay      Int
+    status      String   @default("todo") // 'todo' | 'in_progress' | 'done'
+    assigneeId  Int?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    // Relations
+    project     Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+    assignee    User?        @relation("TaskAssignee", fields: [assigneeId], references: [id], onDelete: SetNull)
+    tags        TaskTag[]
+    attachments Attachment[]
+    comments    Comment[]
+    subTasks    SubTask[]
+
+    @@index([projectId])
+    @@index([assigneeId])
+    @@index([status])
+    @@index([endYear, endMonth, endDay]) // 기한 검색용
+    @@map("tasks")
+}
+
+model SubTask {
+    id        Int      @id @default(autoincrement())
+    taskId    Int
+    title     String
+    status    String   @default("incomplete") // 'incomplete' | 'complete'
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // Relations
+    task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+    @@index([taskId])
+    @@map("sub_tasks")
+}
+
+model Tag {
+    id        Int       @id @default(autoincrement())
+    name      String    @unique
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+
+    // Relations
+    tasks TaskTag[]
+
+    @@map("tags")
+}
+
+model TaskTag {
+    id     Int @id @default(autoincrement())
+    taskId Int
+    tagId  Int
+
+    // Relations
+    task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+    tag  Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+    @@unique([taskId, tagId])
+    @@index([taskId])
+    @@index([tagId])
+    @@map("task_tags")
+}
+
+model Attachment {
+    id        Int      @id @default(autoincrement())
+    taskId    Int
+    url       String
+    createdAt DateTime @default(now())
+
+    // Relations
+    task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+    @@index([taskId])
+    @@map("attachments")
+}
+
+// ============================================
+// Comments
+// ============================================
+
+model Comment {
+    id        Int      @id @default(autoincrement())
+    taskId    Int
+    authorId  Int
+    content   String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // Relations
+    task   Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+    author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+    @@index([taskId])
+    @@index([authorId])
+    @@map("comments")
+}
+
+// ============================================
+// Invitations
+// ============================================
+
+model Invitation {
+    id         Int      @id @default(autoincrement())
+    projectId  Int
+    senderId   Int
+    receiverId Int
+    status     String   @default("pending") // 'pending' | 'accepted' | 'rejected'
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+
+    // Relations
+    project  Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+    sender   User    @relation("InvitationSender", fields: [senderId], references: [id], onDelete: Cascade)
+    receiver User    @relation("InvitationReceiver", fields: [receiverId], references: [id], onDelete: Cascade)
+
+    @@unique([projectId, receiverId])
+    @@index([projectId])
+    @@index([receiverId])
+    @@index([status])
+    @@map("invitations")
+}

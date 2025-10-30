@@ -1,0 +1,52 @@
+name: Close Stale Issues and PRs
+
+on:
+  schedule:
+    # 매주 월요일 오전 9시 (KST)에 실행
+    - cron: '0 0 * * MON'
+  workflow_dispatch:
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Close stale issues and PRs
+        uses: actions/stale@v9
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+          # 이슈 설정
+          stale-issue-message: |
+            이 이슈는 30일 동안 활동이 없어 자동으로 'stale' 라벨이 추가되었습니다.
+            7일 이내에 추가 활동이 없으면 자동으로 닫힙니다.
+            이슈가 여전히 유효하다면 댓글을 남겨주세요.
+          close-issue-message: |
+            이 이슈는 활동이 없어 자동으로 닫혔습니다.
+            필요하다면 다시 열 수 있습니다.
+          stale-issue-label: 'stale'
+          days-before-issue-stale: 30
+          days-before-issue-close: 7
+
+          # PR 설정
+          stale-pr-message: |
+            이 PR은 14일 동안 활동이 없어 자동으로 'stale' 라벨이 추가되었습니다.
+            7일 이내에 추가 활동이 없으면 자동으로 닫힙니다.
+            PR이 여전히 유효하다면 코멘트를 남기거나 업데이트해주세요.
+          close-pr-message: |
+            이 PR은 활동이 없어 자동으로 닫혔습니다.
+            필요하다면 다시 열 수 있습니다.
+          stale-pr-label: 'stale'
+          days-before-pr-stale: 14
+          days-before-pr-close: 7
+
+          # 제외할 라벨
+          exempt-issue-labels: 'pinned,security,in-progress,blocked'
+          exempt-pr-labels: 'pinned,security,work-in-progress,blocked'
+
+          # 기타 설정
+          operations-per-run: 30
+          remove-stale-when-updated: true
