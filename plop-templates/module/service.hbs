@@ -1,0 +1,131 @@
+import { NotFoundError } from '@/shared/errors/custom-error.js';
+
+import {{camelCase name}}Repository from './{{name}}.repository.js';
+import type { Create{{pascalCase (singular name)}}Input, Update{{pascalCase (singular name)}}Input, {{pascalCase (singular name)}}Response } from './{{name}}.types.js';
+
+const {{camelCase name}}Service = {
+    {{#if includeAuth}}
+    /** {{pascalCase (singular name)}} 생성 */
+    async create{{pascalCase (singular name)}}({{camelCase (singular name)}}Data: Create{{pascalCase (singular name)}}Input, userId: number): Promise<{{pascalCase (singular name)}}Response> {
+        // TODO: 비즈니스 로직 구현
+        // 1. 유효성 검증
+        // 2. Repository 호출
+        const new{{pascalCase (singular name)}} = await {{camelCase name}}Repository.create({{camelCase (singular name)}}Data, userId);
+
+        return new{{pascalCase (singular name)}};
+    },
+
+    /** {{pascalCase (singular name)}} 목록 조회 */
+    async get{{pascalCase name}}(userId: number): Promise<{{pascalCase (singular name)}}Response[]> {
+        // TODO: 구현 필요
+        const {{name}} = await {{camelCase name}}Repository.findByUserId(userId);
+
+        return {{name}};
+    },
+
+    /** {{pascalCase (singular name)}} 상세 조회 */
+    async get{{pascalCase (singular name)}}ById(id: number, userId: number): Promise<{{pascalCase (singular name)}}Response> {
+        const {{camelCase (singular name)}} = await {{camelCase name}}Repository.findById(id);
+
+        if (!{{camelCase (singular name)}}) {
+            throw new NotFoundError('{{pascalCase (singular name)}}를 찾을 수 없습니다.');
+        }
+
+        // TODO: 권한 확인 (필요한 경우)
+        // if ({{camelCase (singular name)}}.userId !== userId) {
+        //     throw new ForbiddenError('권한이 없습니다.');
+        // }
+
+        return {{camelCase (singular name)}};
+    },
+
+    /** {{pascalCase (singular name)}} 수정 */
+    async update{{pascalCase (singular name)}}(id: number, updateData: Update{{pascalCase (singular name)}}Input, userId: number): Promise<{{pascalCase (singular name)}}Response> {
+        // 1. 존재 여부 확인
+        const existing{{pascalCase (singular name)}} = await {{camelCase name}}Repository.findById(id);
+
+        if (!existing{{pascalCase (singular name)}}) {
+            throw new NotFoundError('{{pascalCase (singular name)}}를 찾을 수 없습니다.');
+        }
+
+        // 2. 권한 확인 (필요한 경우)
+        // if (existing{{pascalCase (singular name)}}.userId !== userId) {
+        //     throw new ForbiddenError('권한이 없습니다.');
+        // }
+
+        // 3. 업데이트
+        const updated{{pascalCase (singular name)}} = await {{camelCase name}}Repository.update(id, updateData);
+
+        return updated{{pascalCase (singular name)}};
+    },
+
+    /** {{pascalCase (singular name)}} 삭제 */
+    async delete{{pascalCase (singular name)}}(id: number, userId: number): Promise<void> {
+        // 1. 존재 여부 확인
+        const existing{{pascalCase (singular name)}} = await {{camelCase name}}Repository.findById(id);
+
+        if (!existing{{pascalCase (singular name)}}) {
+            throw new NotFoundError('{{pascalCase (singular name)}}를 찾을 수 없습니다.');
+        }
+
+        // 2. 권한 확인 (필요한 경우)
+        // if (existing{{pascalCase (singular name)}}.userId !== userId) {
+        //     throw new ForbiddenError('권한이 없습니다.');
+        // }
+
+        // 3. 삭제
+        await {{camelCase name}}Repository.delete(id);
+    },
+    {{else}}
+    /** {{pascalCase (singular name)}} 생성 (공개) */
+    async create{{pascalCase (singular name)}}({{camelCase (singular name)}}Data: Create{{pascalCase (singular name)}}Input): Promise<{{pascalCase (singular name)}}Response> {
+        const new{{pascalCase (singular name)}} = await {{camelCase name}}Repository.create({{camelCase (singular name)}}Data);
+
+        return new{{pascalCase (singular name)}};
+    },
+
+    /** {{pascalCase (singular name)}} 목록 조회 */
+    async get{{pascalCase name}}(): Promise<{{pascalCase (singular name)}}Response[]> {
+        const {{name}} = await {{camelCase name}}Repository.findAll();
+
+        return {{name}};
+    },
+
+    /** {{pascalCase (singular name)}} 상세 조회 */
+    async get{{pascalCase (singular name)}}ById(id: number): Promise<{{pascalCase (singular name)}}Response> {
+        const {{camelCase (singular name)}} = await {{camelCase name}}Repository.findById(id);
+
+        if (!{{camelCase (singular name)}}) {
+            throw new NotFoundError('{{pascalCase (singular name)}}를 찾을 수 없습니다.');
+        }
+
+        return {{camelCase (singular name)}};
+    },
+
+    /** {{pascalCase (singular name)}} 수정 */
+    async update{{pascalCase (singular name)}}(id: number, updateData: Update{{pascalCase (singular name)}}Input): Promise<{{pascalCase (singular name)}}Response> {
+        const existing{{pascalCase (singular name)}} = await {{camelCase name}}Repository.findById(id);
+
+        if (!existing{{pascalCase (singular name)}}) {
+            throw new NotFoundError('{{pascalCase (singular name)}}를 찾을 수 없습니다.');
+        }
+
+        const updated{{pascalCase (singular name)}} = await {{camelCase name}}Repository.update(id, updateData);
+
+        return updated{{pascalCase (singular name)}};
+    },
+
+    /** {{pascalCase (singular name)}} 삭제 */
+    async delete{{pascalCase (singular name)}}(id: number): Promise<void> {
+        const existing{{pascalCase (singular name)}} = await {{camelCase name}}Repository.findById(id);
+
+        if (!existing{{pascalCase (singular name)}}) {
+            throw new NotFoundError('{{pascalCase (singular name)}}를 찾을 수 없습니다.');
+        }
+
+        await {{camelCase name}}Repository.delete(id);
+    },
+    {{/if}}
+};
+
+export default {{camelCase name}}Service;

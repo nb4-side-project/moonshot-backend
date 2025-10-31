@@ -1,0 +1,31 @@
+import { z } from 'zod';
+
+/** {{pascalCase (singular name)}} 생성 스키마 */
+export const create{{pascalCase (singular name)}}Schema = z.object({
+    // TODO: 필드 정의
+    // 예시:
+    // name: z.string().min(2, '이름은 최소 2자 이상이어야 합니다.'),
+    // description: z.string().optional(),
+});
+
+/** {{pascalCase (singular name)}} 생성 DTO */
+export type Create{{pascalCase (singular name)}}Dto = z.infer<typeof create{{pascalCase (singular name)}}Schema>;
+
+/** {{pascalCase (singular name)}} 수정 스키마 */
+export const update{{pascalCase (singular name)}}Schema = z.object({
+    // TODO: 필드 정의 (모두 optional)
+    // 예시:
+    // name: z.string().min(2).optional(),
+    // description: z.string().optional(),
+});
+
+/** {{pascalCase (singular name)}} 수정 DTO */
+export type Update{{pascalCase (singular name)}}Dto = z.infer<typeof update{{pascalCase (singular name)}}Schema>;
+
+/** {{pascalCase (singular name)}} ID Params 스키마 */
+export const {{camelCase (singular name)}}IdParamsSchema = z.object({
+    id: z.coerce.number().int('ID는 정수여야 합니다.').positive('ID는 양수여야 합니다.'),
+});
+
+/** {{pascalCase (singular name)}} ID Params DTO */
+export type {{pascalCase (singular name)}}IdParamsDto = z.infer<typeof {{camelCase (singular name)}}IdParamsSchema>;

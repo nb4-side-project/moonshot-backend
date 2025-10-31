@@ -1,13 +1,15 @@
-import express from 'express';
+import compression from 'compression';
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import express from 'express';
+import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import cookieParser from 'cookie-parser';
-import compression from 'compression';
-import rateLimit from 'express-rate-limit';
+
+import userRouter from '@/modules/users/users.routes.js';
 import { CORS_ORIGINS, NODE_ENV } from '@/shared/constants/constants.js';
-import { errorHandler } from '@/shared/middlewares/error-handler.js';
-import { notFoundHandler } from '@/shared/middlewares/not-found-handler.js';
+import errorHandler from '@/shared/middlewares/error-handler.js';
+import notFoundHandler from '@/shared/middlewares/not-found-handler.js';
 
 const app = express();
 
@@ -32,7 +34,7 @@ const limiter = rateLimit({
     max: 100, // IP당 최대 100 요청
     message: '너무 많은 요청을 보냈습니다. 잠시 후 다시 시도해주세요.',
 });
-app.use('/api/', limiter); // /api 경로에만 적용
+app.use(limiter); // 모든 경로에 적용
 
 // 로깅 미들웨어
 if (NODE_ENV === 'development') {
@@ -72,10 +74,14 @@ if (NODE_ENV === 'development') {
     console.log('📁 Static file serving enabled at /uploads');
 }
 
-// 라우트 등록 (추후 추가)
-// app.use('/auth', authRoutes);
-// app.use('/users', usersRoutes);
-// app.use('/projects', projectsRoutes);
+// 라우트 등록 (개발 순서)
+// app.use('/auth', authRouter);           // 1. 인증 (회원가입, 로그인, 로그아웃)
+app.use('/users', userRouter); // 2. 유저 관리
+// app.use('/projects', projectRouter);    // 3. 프로젝트 관리
+// app.use('/tasks', taskRouter);          // 4. 할일 관리
+// app.use('/comments', commentRouter);    // 5. 댓글
+// app.use('/invitations', invitationRouter); // 6. 초대
+// app.use('/files', fileRouter);          // 7. 파일 업로드
 
 // 404 핸들러 (정의되지 않은 라우트)
 app.use(notFoundHandler);

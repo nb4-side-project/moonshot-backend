@@ -1,20 +1,20 @@
 {
-  "singleQuote": true,
-  "printWidth": 100,
-  "tabWidth": 4,
-  "useTabs": false,
-  "semi": true,
-  "bracketSpacing": true,
-  "trailingComma": "all",
-  "endOfLine": "lf",
-  "arrowParens": "always",
-  "plugins": ["prettier-plugin-prisma"],
-  "overrides": [
-    {
-      "files": ["*.json"],
-      "options": {
-        "printWidth": 320
-      }
-    }
-  ]
+    "singleQuote": true,
+    "printWidth": 120,
+    "tabWidth": 4,
+    "useTabs": false,
+    "semi": true,
+    "bracketSpacing": true,
+    "trailingComma": "all",
+    "endOfLine": "lf",
+    "arrowParens": "always",
+    "plugins": ["prettier-plugin-prisma"],
+    "overrides": [
+        {
+            "files": ["*.json"],
+            "options": {
+                "printWidth": 320
+            }
+        }
+    ]
 }

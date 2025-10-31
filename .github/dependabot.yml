@@ -4,11 +4,11 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
       day: "monday"
       time: "09:00"
       timezone: "Asia/Seoul"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 3
     reviewers:
       - "nb4-side-project/moonshot-backend-team"
     assignees:

@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+
 import { NODE_ENV } from '@/shared/constants/constants.js';
 
 const prisma = new PrismaClient({

@@ -83,11 +83,7 @@ declare global {
 #### 2. AsyncRequestHandler (공개 엔드포인트용)
 
 ```typescript
-export type AsyncRequestHandler = (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-) => Promise<void> | void;
+export type AsyncRequestHandler = (req: Request, res: Response, next: NextFunction) => Promise<void> | void;
 ```
 
 **사용 시기**:
@@ -108,11 +104,7 @@ export interface AuthRequest extends Request {
     user: AuthUser; // ✅ 옵셔널이 아님 (항상 존재 보장)
 }
 
-export type AsyncAuthRequestHandler = (
-    req: AuthRequest,
-    res: Response,
-    next: NextFunction,
-) => Promise<void> | void;
+export type AsyncAuthRequestHandler = (req: AuthRequest, res: Response, next: NextFunction) => Promise<void> | void;
 ```
 
 **사용 시기**:
@@ -598,11 +590,7 @@ import prisma from '../../configs/prisma.js';
  * @throws {NotFoundError} 프로젝트가 존재하지 않는 경우
  * @throws {ForbiddenError} 프로젝트 소유자가 아닌 경우
  */
-export async function isProjectOwner(
-    req: AuthRequest,
-    res: Response,
-    next: NextFunction,
-): Promise<void> {
+export async function isProjectOwner(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
     try {
         const projectId = parseInt(req.params.projectId!);
         const userId = req.user.id;
@@ -631,11 +619,7 @@ export async function isProjectOwner(
  *
  * 프로젝트 소유자 또는 멤버인지 확인합니다.
  */
-export async function isProjectMember(
-    req: AuthRequest,
-    res: Response,
-    next: NextFunction,
-): Promise<void> {
+export async function isProjectMember(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
     try {
         const projectId = parseInt(req.params.projectId!);
         const userId = req.user.id;
@@ -663,10 +647,7 @@ export async function isProjectMember(
 ```typescript
 import { Router } from 'express';
 import { authenticate } from '../../shared/middlewares/auth.middleware.js';
-import {
-    isProjectOwner,
-    isProjectMember,
-} from '../../shared/middlewares/authorization.middleware.js';
+import { isProjectOwner, isProjectMember } from '../../shared/middlewares/authorization.middleware.js';
 import { asyncHandler } from '../../shared/utils/async-handler.js';
 import * as projectsController from './projects.controller.js';
 
@@ -677,20 +658,10 @@ router.get('/', authenticate, asyncHandler(projectsController.getProjects));
 router.post('/', authenticate, asyncHandler(projectsController.createProject));
 
 // 프로젝트 멤버 확인 필요
-router.get(
-    '/:projectId',
-    authenticate,
-    isProjectMember,
-    asyncHandler(projectsController.getProjectById),
-);
+router.get('/:projectId', authenticate, isProjectMember, asyncHandler(projectsController.getProjectById));
 
 // 프로젝트 소유자 확인 필요
-router.delete(
-    '/:projectId',
-    authenticate,
-    isProjectOwner,
-    asyncHandler(projectsController.deleteProject),
-);
+router.delete('/:projectId', authenticate, isProjectOwner, asyncHandler(projectsController.deleteProject));
 
 export default router;
 ```
@@ -760,11 +731,7 @@ export const createTask: AsyncAuthRequestHandler = async (req, res) => {
 
 ```typescript
 import type { AsyncAuthRequestHandler } from '../../types/express.js';
-import {
-    BadRequestError,
-    ForbiddenError,
-    NotFoundError,
-} from '../../shared/errors/custom-error.js';
+import { BadRequestError, ForbiddenError, NotFoundError } from '../../shared/errors/custom-error.js';
 import prisma from '../../configs/prisma.js';
 
 /**

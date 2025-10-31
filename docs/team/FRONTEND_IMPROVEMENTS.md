@@ -345,11 +345,7 @@ export const googleLogin: AsyncRequestHandler = async (req, res) => {
 
 ```typescript
 import axios from 'axios';
-import {
-    GOOGLE_CLIENT_ID,
-    GOOGLE_CLIENT_SECRET,
-    FRONTEND_URL,
-} from '@/shared/constants/constants.js';
+import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, FRONTEND_URL } from '@/shared/constants/constants.js';
 
 /**
  * 구글 로그인 콜백
@@ -420,11 +416,7 @@ export const googleCallback: AsyncRequestHandler = async (req, res) => {
         });
 
         // 6. 프론트엔드로 리다이렉트 (쿼리에 토큰 포함)
-        res.redirect(
-            `${FRONTEND_URL}/auth/callback?` +
-                `accessToken=${accessToken}&` +
-                `refreshToken=${refreshToken}`,
-        );
+        res.redirect(`${FRONTEND_URL}/auth/callback?` + `accessToken=${accessToken}&` + `refreshToken=${refreshToken}`);
     } catch (error) {
         console.error('Google OAuth error:', error);
         res.redirect(`${FRONTEND_URL}/login?error=google_auth_failed`);

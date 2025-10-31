@@ -1,0 +1,60 @@
+import prisma from '@/configs/prisma.js';
+
+import type { Create{{pascalCase (singular name)}}Input, Update{{pascalCase (singular name)}}Input } from './{{name}}.types.js';
+
+const {{camelCase name}}Repository = {
+    {{#if includeAuth}}
+    /** {{pascalCase (singular name)}} 생성 */
+    async create({{camelCase (singular name)}}Data: Create{{pascalCase (singular name)}}Input, userId: number) {
+        return await prisma.{{camelCase (singular name)}}.create({
+            data: {
+                ...{{camelCase (singular name)}}Data,
+                userId, // 필요시 수정
+            },
+        });
+    },
+
+    /** 유저별 {{pascalCase (singular name)}} 조회 */
+    async findByUserId(userId: number) {
+        return await prisma.{{camelCase (singular name)}}.findMany({
+            where: { userId }, // 필요시 수정
+        });
+    },
+    {{else}}
+    /** {{pascalCase (singular name)}} 생성 */
+    async create({{camelCase (singular name)}}Data: Create{{pascalCase (singular name)}}Input) {
+        return await prisma.{{camelCase (singular name)}}.create({
+            data: {{camelCase (singular name)}}Data,
+        });
+    },
+
+    /** 모든 {{pascalCase (singular name)}} 조회 */
+    async findAll() {
+        return await prisma.{{camelCase (singular name)}}.findMany();
+    },
+    {{/if}}
+
+    /** ID로 {{pascalCase (singular name)}} 조회 */
+    async findById(id: number) {
+        return await prisma.{{camelCase (singular name)}}.findUnique({
+            where: { id },
+        });
+    },
+
+    /** {{pascalCase (singular name)}} 수정 */
+    async update(id: number, updateData: Update{{pascalCase (singular name)}}Input) {
+        return await prisma.{{camelCase (singular name)}}.update({
+            where: { id },
+            data: updateData,
+        });
+    },
+
+    /** {{pascalCase (singular name)}} 삭제 */
+    async delete(id: number) {
+        return await prisma.{{camelCase (singular name)}}.delete({
+            where: { id },
+        });
+    },
+};
+
+export default {{camelCase name}}Repository;

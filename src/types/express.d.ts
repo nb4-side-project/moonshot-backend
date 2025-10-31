@@ -1,5 +1,5 @@
-import type { Request, Response, NextFunction } from 'express';
 import type { AuthUser } from './auth-user.js';
+import type { Request, Response, NextFunction } from 'express';
 
 // Express Request 타입 전역 확장
 declare global {
@@ -23,11 +23,7 @@ declare global {
  *   // req.user는 undefined 가능
  * };
  */
-export type AsyncRequestHandler = (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-) => Promise<void> | void;
+export type AsyncRequestHandler = (req: Request, res: Response, next: NextFunction) => Promise<void> | void;
 
 /**
  * 인증된 사용자 정보를 포함하는 Request 타입
@@ -50,8 +46,4 @@ export interface AuthRequest extends Request {
  *   const userId = req.user.id;  // ✅ 타입 안전
  * };
  */
-export type AsyncAuthRequestHandler = (
-    req: AuthRequest,
-    res: Response,
-    next: NextFunction,
-) => Promise<void> | void;
+export type AsyncAuthRequestHandler = (req: AuthRequest, res: Response, next: NextFunction) => Promise<void> | void;

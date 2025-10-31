@@ -1,11 +1,13 @@
-import type { Request, Response, NextFunction } from 'express';
 import type { AsyncRequestHandler } from '@/types/express.js';
+
+import type { Request, Response, NextFunction } from 'express';
 
 /**
  * async 함수를 Express 미들웨어로 변환하는 헬퍼
  *
  * 에러가 발생하면 자동으로 error-handler로 전달합니다.
  *
+ * @param handler
  * @example
  * // 컨트롤러 파일
  * export const getUser = async (req, res) => {

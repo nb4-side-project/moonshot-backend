@@ -1,6 +1,7 @@
-import app from './app.js';
 import prisma from '@/configs/prisma.js';
 import { PORT, NODE_ENV } from '@/shared/constants/constants.js';
+
+import app from './app.js';
 
 const server = app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT} in ${NODE_ENV} mode`);

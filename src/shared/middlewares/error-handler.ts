@@ -1,10 +1,12 @@
-import type { Request, Response, NextFunction } from 'express';
 import { Prisma } from '@prisma/client';
 import { ZodError } from 'zod';
+
 import { NODE_ENV } from '@/shared/constants/constants.js';
 import { AppError, BadRequestError } from '@/shared/errors/custom-error.js';
 
-export function errorHandler(err: Error, req: Request, res: Response, _next: NextFunction) {
+import type { Request, Response, NextFunction } from 'express';
+
+function errorHandler(err: Error, req: Request, res: Response, _next: NextFunction) {
     // 에러 로깅 (개발/프로덕션 환경별)
     console.error('[ERROR] Global Error Handler');
     console.error('[ERROR] Name:', err.name);
@@ -100,3 +102,5 @@ export function errorHandler(err: Error, req: Request, res: Response, _next: Nex
 
     return res.status(500).json(responseBody);
 }
+
+export default errorHandler;

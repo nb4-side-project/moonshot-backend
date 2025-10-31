@@ -1,0 +1,22 @@
+import type { {{pascalCase (singular name)}} } from '@prisma/client';
+
+/** {{pascalCase (singular name)}} 생성 요청 */
+export interface Create{{pascalCase (singular name)}}Input {
+    // TODO: 필드 정의
+    // 예시:
+    // name: string;
+    // description?: string;
+}
+
+/** {{pascalCase (singular name)}} 수정 요청 */
+export interface Update{{pascalCase (singular name)}}Input {
+    // TODO: 필드 정의 (모두 optional)
+    // 예시:
+    // name?: string;
+    // description?: string;
+}
+
+/** {{pascalCase (singular name)}} 응답 */
+export type {{pascalCase (singular name)}}Response = {{pascalCase (singular name)}};
+// 또는 필요시 특정 필드 제외:
+// export type {{pascalCase (singular name)}}Response = Omit<{{pascalCase (singular name)}}, 'sensitiveField'>;

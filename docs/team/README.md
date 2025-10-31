@@ -10,7 +10,11 @@
 docs/
 ├── team/                    # 팀 공유 문서 (Git 추적 ✅)
 │   ├── README.md           # 문서 가이드 (이 파일)
+│   ├── CODE_CONVENTIONS.md # 코드 컨벤션 및 아키텍처 (필독!)
 │   ├── AUTH_SETUP_GUIDE.md # 인증/인가 설정 가이드 (필독!)
+│   ├── PLOP_GUIDE.md       # Plop 모듈 자동 생성 가이드
+│   ├── GITHUB_AUTOMATION.md # GitHub 자동화 정책 가이드
+│   ├── FRONTEND_IMPROVEMENTS.md # 프론트엔드 개선 사항
 │   └── GIT_WORKFLOW.md     # Git 협업 규칙
 │
 └── guides/                  # 개인 참고 문서 (Git 추적 ❌)
@@ -55,7 +59,29 @@ docs/
 
 ---
 
-### 1. **DEVELOPMENT_GUIDE.md** (필수 읽기 ⭐)
+### 1. **CODE_CONVENTIONS.md** (필수 읽기 ⭐⭐⭐)
+
+**코드 작성 전 반드시 읽어야 하는 문서입니다.**
+
+**포함 내용:**
+
+- ✅ 파일 및 폴더 네이밍 규칙
+- ✅ 3-Layer Architecture 구조
+- ✅ Zod 유효성 검증 패턴
+- ✅ 타입 정의 규칙 (전역 vs 도메인별)
+- ✅ 샘플 코드: 유저 등록 API (완전 구현)
+- ✅ 체크리스트
+
+**언제 읽어야 하나요?**
+
+- **코드 작성 전 필수 읽기** (모든 팀원)
+- 새로운 도메인 모듈을 추가할 때
+- 파일 네이밍 규칙을 확인할 때
+- 3-Layer 패턴을 이해하고 싶을 때
+
+---
+
+### 2. **DEVELOPMENT_GUIDE.md** (필수 읽기 ⭐)
 
 **가장 중요한 문서입니다.** 백엔드 개발을 시작하기 전에 반드시 읽어야 합니다.
 
@@ -79,7 +105,7 @@ docs/
 
 ---
 
-### 2. **API_SPECIFICATION.md**
+### 3. **API_SPECIFICATION.md**
 
 간결하게 정리된 API 레퍼런스입니다.
 
@@ -99,7 +125,7 @@ docs/
 
 ---
 
-### 3. **MoonShot-Api-Specification.md**
+### 4. **MoonShot-Api-Specification.md**
 
 원본 프로젝트 명세서입니다.
 
@@ -119,7 +145,7 @@ docs/
 
 ---
 
-### 4. **COMMANDS_REFERENCE.md** (명령어 레퍼런스 📋)
+### 5. **COMMANDS_REFERENCE.md** (명령어 레퍼런스 📋)
 
 **개발 시 자주 사용하는 모든 명령어를 정리한 문서입니다.**
 
@@ -143,7 +169,30 @@ docs/
 
 ---
 
-### 5. **AUTH_SETUP_GUIDE.md** (인증/인가 설정 가이드 🔐)
+### 6. **PLOP_GUIDE.md** (Plop 모듈 자동 생성 가이드 🤖)
+
+**Users 모듈 패턴을 기반으로 새로운 모듈을 자동 생성하는 도구 가이드입니다.**
+
+**포함 내용:**
+
+- 🚀 빠른 시작 (npm run generate:module)
+- 📂 생성되는 파일 구조 (controller, service, repository, routes, schema, types)
+- 🛠️ 사용 예시 (Auth, Projects, Tasks 모듈)
+- ✅ 생성 후 체크리스트
+- 🎯 네이밍 규칙 (복수형, camelCase, PascalCase)
+- 🔧 커스터마이징 방법
+- ⚠️ 주의사항
+
+**언제 읽어야 하나요?**
+
+- 새로운 도메인 모듈을 추가할 때
+- 반복적인 보일러플레이트 코드 작성을 피하고 싶을 때
+- 일관된 코드 구조를 유지하고 싶을 때
+- Plop 템플릿을 수정하고 싶을 때
+
+---
+
+### 7. **AUTH_SETUP_GUIDE.md** (인증/인가 설정 가이드 🔐)
 
 **프로젝트 분배 전 필독! 팀원 모두가 동일한 방식으로 인증을 처리하기 위한 가이드입니다.**
 
@@ -168,7 +217,7 @@ docs/
 
 ---
 
-### 6. **GIT_WORKFLOW.md** (Git 워크플로우 🌿)
+### 8. **GIT_WORKFLOW.md** (Git 워크플로우 🌿)
 
 **팀 프로젝트를 위한 Git 명령어 및 협업 가이드입니다.**
 
@@ -194,7 +243,31 @@ docs/
 
 ---
 
-### 7. **ESM_CONFIG_FILES.md** (ESM 설정 파일 ⚙️)
+### 9. **GITHUB_AUTOMATION.md** (GitHub 자동화 🤖)
+
+**GitHub Actions, Bot, 템플릿 등 자동화 정책을 설명하는 가이드입니다.**
+
+**포함 내용:**
+
+- 🔄 CI/CD 파이프라인 (Lint, Type Check, Build)
+- 📦 Dependabot 의존성 자동 업데이트 (월 3개)
+- 🗑️ Stale Bot 비활성 이슈/PR 관리 (90일/60일)
+- 🏷️ Auto Label 자동 라벨링 규칙
+- 📋 Issue 템플릿 사용법 (API, 버그, 기능 등)
+- ✍️ PR 템플릿 작성 가이드
+- 📈 정책 변경 이력
+
+**언제 읽어야 하나요?**
+
+- CI 검사가 실패했을 때
+- Dependabot PR을 처리해야 할 때
+- Stale 라벨이 추가됐을 때
+- Issue나 PR 템플릿 사용법이 궁금할 때
+- GitHub Actions 동작을 이해하고 싶을 때
+
+---
+
+### 10. **ESM_CONFIG_FILES.md** (ESM 설정 파일 ⚙️)
 
 **ESM 프로젝트의 모든 설정 파일을 완벽하게 정리한 문서입니다.**
 
@@ -274,7 +347,8 @@ npx tsx watch src/server.ts
 2. .env 파일 설정 → JWT_SECRET 생성 등
 3. Prisma 마이그레이션 실행
 4. npm run dev → 개발 서버 실행 확인
-5. AUTH_SETUP_GUIDE.md → 인증 패턴 숙지 (필수!)
+5. CODE_CONVENTIONS.md → 코드 컨벤션 숙지 (필수!)
+6. AUTH_SETUP_GUIDE.md → 인증 패턴 숙지 (필수!)
 ```
 
 ### 시나리오 1: "프로젝트를 처음 시작합니다"
@@ -305,16 +379,27 @@ npx tsx watch src/server.ts
 4. Response 형식 확인 (API_SPECIFICATION.md)
 ```
 
-### 시나리오 4: "할 일(Task) CRUD를 구현하고 싶습니다"
+### 시나리오 4: "새로운 모듈을 빠르게 생성하고 싶습니다"
 
 ```
-1. AUTH_SETUP_GUIDE.md → 인증 컨트롤러 패턴 확인
-2. DEVELOPMENT_GUIDE.md 섹션 3.1 (데이터베이스 스키마 - Task)
-3. DEVELOPMENT_GUIDE.md 섹션 4.4 (할 일 API)
-4. API_SPECIFICATION.md → Tasks 섹션
+1. PLOP_GUIDE.md → Plop 사용법 확인
+2. npm run generate:module → 모듈 이름 입력 (예: auth, projects, tasks)
+3. 인증 필요 여부 선택
+4. 생성된 파일에서 TODO 주석 확인 및 구현
+5. CODE_CONVENTIONS.md → 코드 컨벤션 확인
 ```
 
-### 시나리오 5: "에러 처리를 어떻게 해야 하나요?"
+### 시나리오 5: "할 일(Task) CRUD를 구현하고 싶습니다"
+
+```
+1. npm run generate:module → tasks 모듈 자동 생성 (빠른 시작)
+2. AUTH_SETUP_GUIDE.md → 인증 컨트롤러 패턴 확인
+3. DEVELOPMENT_GUIDE.md 섹션 3.1 (데이터베이스 스키마 - Task)
+4. DEVELOPMENT_GUIDE.md 섹션 4.4 (할 일 API)
+5. API_SPECIFICATION.md → Tasks 섹션
+```
+
+### 시나리오 6: "에러 처리를 어떻게 해야 하나요?"
 
 ```
 1. DEVELOPMENT_GUIDE.md 섹션 6 (에러 처리)
@@ -322,7 +407,7 @@ npx tsx watch src/server.ts
 3. 전역 에러 핸들러 구현
 ```
 
-### 시나리오 6: "ESLint/Prettier를 설정하고 싶습니다"
+### 시나리오 7: "ESLint/Prettier를 설정하고 싶습니다"
 
 ```
 1. ESM_CONFIG_FILES.md 섹션 4, 5 (ESLint, Prettier 설정)
@@ -330,7 +415,7 @@ npx tsx watch src/server.ts
 3. COMMANDS_REFERENCE.md 섹션 4 (ESLint, Prettier 명령어)
 ```
 
-### 시나리오 7: "Git 브랜치 전략이 궁금합니다"
+### 시나리오 8: "Git 브랜치 전략이 궁금합니다"
 
 ```
 1. GIT_WORKFLOW.md 섹션 2 (브랜치 전략)
@@ -338,14 +423,37 @@ npx tsx watch src/server.ts
 3. GIT_WORKFLOW.md 섹션 5 (PR 프로세스)
 ```
 
-### 시나리오 8: "Prisma 명령어를 찾고 싶습니다"
+### 시나리오 9: "Prisma 명령어를 찾고 싶습니다"
 
 ```
 1. COMMANDS_REFERENCE.md 섹션 3 (데이터베이스 명령어)
 2. ESM_CONFIG_FILES.md 섹션 3 (Prisma 설정)
 ```
 
-### 시나리오 9: "ESM 관련 오류가 발생했습니다"
+### 시나리오 10: "CI 검사가 실패했습니다"
+
+```
+1. GITHUB_AUTOMATION.md 섹션 2 (CI/CD)
+2. GITHUB_AUTOMATION.md 섹션 8 (팁 & 베스트 프랙티스)
+3. COMMANDS_REFERENCE.md (Lint, Format 명령어)
+```
+
+### 시나리오 11: "Dependabot PR이 생성됐는데 어떻게 처리하나요?"
+
+```
+1. GITHUB_AUTOMATION.md 섹션 3 (Dependabot)
+2. GITHUB_AUTOMATION.md 섹션 8 (Dependabot PR 처리)
+```
+
+### 시나리오 12: "이슈나 PR에 Stale 라벨이 추가됐습니다"
+
+```
+1. GITHUB_AUTOMATION.md 섹션 4 (Stale Bot)
+2. 여전히 유효하면 → 댓글 작성 (자동으로 라벨 제거됨)
+3. 필요없으면 → 그대로 두기 (자동 닫힘)
+```
+
+### 시나리오 13: "ESM 관련 오류가 발생했습니다"
 
 ```
 1. ESM_CONFIG_FILES.md (전체 확인)
@@ -353,7 +461,7 @@ npx tsx watch src/server.ts
 3. COMMANDS_REFERENCE.md 섹션 11 (문제 해결)
 ```
 
-### 시나리오 10: "팀원과 협업 중 충돌이 발생했습니다"
+### 시나리오 14: "팀원과 협업 중 충돌이 발생했습니다"
 
 ```
 1. GIT_WORKFLOW.md 섹션 6 (충돌 해결)
@@ -463,6 +571,6 @@ npx prettier --write .
 ---
 
 **작성일:** 2025-10-29
-**마지막 업데이트:** 2025-10-29
+**마지막 업데이트:** 2025-10-31
 
 **Happy Coding! 🚀**
