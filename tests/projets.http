@@ -1,0 +1,29 @@
+### 프로젝트 생성
+POST http://localhost:3001/projects
+# Authorization: Bearer 1bf5f5e931b33c568436d5e7f1575e1b1776a20b1a1edbc5c94c62fab5631a43
+Content-Type: application/json
+
+{
+  "name": "테스트 프로젝트",
+  "description": "새로운 프로젝트 생성 테스트입니다."
+}
+
+
+# ### 프로젝트 조회
+# GET http://localhost:3000/projects/1
+# Content-Type: application/json
+
+
+# ### 프로젝트 수정
+# PATCH http://localhost:3000/projects/1
+# Content-Type: application/json
+
+# {
+#   "name": "수정된 프로젝트명",
+#   "description": "프로젝트 설명이 수정되었습니다."
+# }
+
+
+# ### 프로젝트 삭제
+# DELETE http://localhost:3000/projects/1
+# Content-Type: application/json
