@@ -6,6 +6,7 @@ import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import morgan from 'morgan';
 
+import projectRouter from '@/modules/projects/project.routes.js';
 import userRouter from '@/modules/users/users.routes.js';
 import { CORS_ORIGINS, NODE_ENV } from '@/shared/constants/constants.js';
 import errorHandler from '@/shared/middlewares/error-handler.js';
@@ -77,7 +78,7 @@ if (NODE_ENV === 'development') {
 // 라우트 등록 (개발 순서)
 // app.use('/auth', authRouter);           // 1. 인증 (회원가입, 로그인, 로그아웃)
 app.use('/users', userRouter); // 2. 유저 관리
-// app.use('/projects', projectRouter);    // 3. 프로젝트 관리
+app.use('/projects', projectRouter); // 3. 프로젝트 관리
 // app.use('/tasks', taskRouter);          // 4. 할일 관리
 // app.use('/comments', commentRouter);    // 5. 댓글
 // app.use('/invitations', invitationRouter); // 6. 초대
