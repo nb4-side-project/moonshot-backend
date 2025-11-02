@@ -98,19 +98,20 @@ model ProjectMember {
 // ============================================
 
 model Task {
-    id         Int      @id @default(autoincrement())
-    projectId  Int
-    title      String
-    startYear  Int
-    startMonth Int
-    startDay   Int
-    endYear    Int
-    endMonth   Int
-    endDay     Int
-    status     String   @default("todo") // 'todo' | 'in_progress' | 'done'
-    assigneeId Int?
-    createdAt  DateTime @default(now())
-    updatedAt  DateTime @updatedAt
+    id          Int      @id @default(autoincrement())
+    projectId   Int
+    title       String
+    description String?
+    startYear   Int
+    startMonth  Int
+    startDay    Int
+    endYear     Int
+    endMonth    Int
+    endDay      Int
+    status      String   @default("todo") // 'todo' | 'in_progress' | 'done'
+    assigneeId  Int?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
 
     // Relations
     project     Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
