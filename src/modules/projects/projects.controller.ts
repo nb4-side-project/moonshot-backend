@@ -31,6 +31,8 @@ const projectController = {
 
 export default projectController;
 
+// 추가 +1
+
 // **프로젝트 등록**
 // - 프로젝트 이름, 설명을 입력하여 프로젝트를 생성합니다.
 // - 유저당 최대 5개의 프로젝트만 생성 가능합니다.

@@ -7,3 +7,7 @@ export interface AuthUser {
     id: number;
     email: string;
 }
+
+export interface AuthenticatedRequest extends Request {
+    user: AuthUser;
+}
