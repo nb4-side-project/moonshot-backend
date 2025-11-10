@@ -74,7 +74,7 @@
         "vitest": "^4.0.5"
     },
     "dependencies": {
-        "@prisma/client": "^6.18.0",
+        "@prisma/client": "^6.19.0",
         "@sendgrid/mail": "^8.1.6",
         "@types/nodemailer": "^7.0.3",
         "bcrypt": "^6.0.0",
