@@ -46,7 +46,7 @@
     },
     "homepage": "https://github.com/nb4-side-project/moonshot-backend#readme",
     "devDependencies": {
-        "@commitlint/cli": "^20.1.0",
+        "@commitlint/cli": "^20.4.2",
         "@commitlint/config-conventional": "^20.0.0",
         "@types/bcrypt": "^6.0.0",
         "@types/compression": "^1.8.1",
